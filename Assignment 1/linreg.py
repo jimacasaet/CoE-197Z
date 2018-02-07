@@ -5,39 +5,48 @@ John Rufino Macasaet
 CoE 197 Z
 """
 
+import sys
 import numpy as np
+import matplotlib.pyplot as plt
 from numpy import *
 
-#ax^3+bx^2+cx+d=0
-def run(a, b, c, d):
-    x = np.linspace(-10,10,num=21)
-    p = np.polyval([a,b,c,d],x)
-    print(p)
+# m denotes the number of examples here, not the number of features
+def gradientDescent(x, y, theta, alpha, m, numIterations):
+    xTrans = x.transpose()
+    for i in range(0, numIterations):
+        hypothesis = np.dot(x, theta)
+        loss = hypothesis - y
+        # avg cost per example (the 2 in 2*m doesn't really matter here.
+        # But to be consistent with the gradient, I include it)
+        cost = np.sum(loss ** 2) / (2 * m)
+        print("Iteration %d | Cost: %f" % (i, cost))
+        # avg gradient per example
+        gradient = np.dot(xTrans, loss) / m
+        # update
+        theta = theta - alpha * gradient
+    return theta
+    
+def genData(count, x):
+    a = float(sys.argv[1])
+    b = float(sys.argv[2])
+    y = None
+    if count == 4:
+        c = float(sys.argv[3]) 
+        d = float(sys.argv[4])
+        y = np.polyval([a,b,c,d],x)
+    elif count == 3:
+        c = float(sys.argv[3])
+        y = np.polyval([a,b,c],x)
+    elif count == 2:
+        y = np.polyval([a,b],x)
+    return y
 
-def compute_error_for_line_given_points(b, m, points):
-    totalError = 0
-    for i in range(0, len(points)):
-        x = points[i, 0]
-        y = points[i, 1]
-        totalError += (y - (m * x + b)) ** 2
-    return totalError / float(len(points))
-    
-def step_gradient(b_current, m_current, points, learning_rate):
-    b_gradient = 0
-    m_gradient = 0
-    N = float(len(points))
-    for i in range(0, len(points)):
-        x = points[i, 0]
-        y = points[i, 1]
-        b_gradient += -(2/N) * (y - ((m_current * x) + b_current))
-        m_gradient += -(2/N) * x * (y - ((m_current * x) + b_current))
-    new_b = b_current - (learning_rate * b_gradient)
-    new_m = m_current - (learning_rate * m_gradient)
-    return [new_b, new_m]
-    
-def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_iterations):
-    b = starting_b
-    m = starting_m
-    for i in range(num_iterations):
-        b, m = step_gradient(b,m, array(points), learning_rate)
-    return [b, m]
+#command line arguments
+#ax^3+bx^2+cx+d=0
+arg_count = len(sys.argv)-1
+
+x = np.linspace(-10,10,num=21)
+p = genData(arg_count, x)
+plt.plot(x,p,'bo')
+plt.show()
+print(p)
