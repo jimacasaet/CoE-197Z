@@ -10,22 +10,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy import *
 
-# m denotes the number of examples here, not the number of features
 def gradientDescent(x, y, theta, alpha, m, numIterations):
     xTrans = x.transpose()
     for i in range(0, numIterations):
         hypothesis = np.dot(x, theta)
         loss = hypothesis - y
-        # avg cost per example (the 2 in 2*m doesn't really matter here.
-        # But to be consistent with the gradient, I include it)
         cost = np.sum(loss ** 2) / (2 * m)
-        print("Iteration %d | Cost: %f" % (i, cost))
-        # avg gradient per example
+        print("Epoch %d | Cost: %f" % (i, cost))
         gradient = np.dot(xTrans, loss) / m
-        # update
         theta = theta - alpha * gradient
         alpha = alpha - theta * gradient
-    return theta
+    return alpha
     
 def genData(count, x):
     a = float(sys.argv[1])
@@ -59,7 +54,7 @@ m, n = np.shape(x)
 numIterations= 100000
 alpha = 0.0001
 theta = np.ones(n)
-theta = gradientDescent(x, p, theta, alpha, m, numIterations)
+alpha = gradientDescent(x, p, theta, alpha, m, numIterations)
 
 plt.plot(points,p,'bo')
 plt.show()
