@@ -64,7 +64,6 @@ theta = gradientDescent(x, p, theta, alpha, m, numIterations)
 plt.plot(points,p,'bo')
 plt.show()
 
-
 '''
 References:
 http://blog.datumbox.com/tuning-the-learning-rate-in-gradient-descent/
