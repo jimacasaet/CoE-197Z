@@ -41,12 +41,24 @@ def genData(count, x):
         y = np.polyval([a,b],x)
     return y
 
-#command line arguments
-#ax^3+bx^2+cx+d=0
+# python3 linreg.py a b c d
+# where: ax^3+bx^2+cx+d=0
 arg_count = len(sys.argv)-1
 
-x = np.linspace(-10,10,num=21)
-p = genData(arg_count, x)
-plt.plot(x,p,'bo')
-plt.show()
+# generate data points
+points = np.linspace(-10,10,num=21)
+one = np.ones(21,1);
+x = one*points;
+p = genData(arg_count, points)
+noise = np.random.normal(0,1,len(p)) #generate noise to be added
+p = p + noise #add the noise
+'''
+m, n = np.shape(x)
+numIterations= 100000
+alpha = 0.0001
+theta = np.ones(n)
+theta = gradientDescent(x, y, theta, alpha, m, numIterations)
+'''
 print(p)
+plt.plot(points,p,'bo')
+plt.show()
