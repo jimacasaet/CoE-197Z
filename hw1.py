@@ -36,7 +36,7 @@ def run(a, b, c, d):
     #y = mx + b (slope formula)
     initial_b = 0
     initial_m = 0 # ideal slope, will start with 0
-    num_iterations = 1000
+    num_iterations = 10000
     
     [b, m] = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)
     
