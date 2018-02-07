@@ -11,9 +11,8 @@ from numpy import *
 #ax^3+bx^2+cx+d=0
 def run(a, b, c, d):
     x = np.linspace(-10,10,num=21)
-    p = np.polyval([1,2,3,4],x)
+    p = np.polyval([a,b,c,d],x)
     print(p)
-    
 
 def compute_error_for_line_given_points(b, m, points):
     totalError = 0
@@ -42,9 +41,3 @@ def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_i
     for i in range(num_iterations):
         b, m = step_gradient(b,m, array(points), learning_rate)
     return [b, m]
-
-def hi():
-    return 'hi'
-
-if __name__ == '__main__':
-    hi()
