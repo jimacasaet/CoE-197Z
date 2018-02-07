@@ -24,6 +24,7 @@ def gradientDescent(x, y, theta, alpha, m, numIterations):
         gradient = np.dot(xTrans, loss) / m
         # update
         theta = theta - alpha * gradient
+        alpha = alpha - theta * gradient
     return theta
     
 def genData(count, x):
@@ -46,9 +47,10 @@ def genData(count, x):
 arg_count = len(sys.argv)-1
 
 # generate data points
-points = np.linspace(-10,10,num=21)
-one = np.ones(21,1);
-x = one*points;
+points = np.reshape(np.linspace(-10,10,num=21),(21,1))
+one = np.ones((21,1));
+print(points.shape)
+x = np.hstack((one,points))
 p = genData(arg_count, points)
 noise = np.random.normal(0,1,len(p)) #generate noise to be added
 p = p + noise #add the noise
@@ -59,6 +61,12 @@ alpha = 0.0001
 theta = np.ones(n)
 theta = gradientDescent(x, y, theta, alpha, m, numIterations)
 '''
-print(p)
 plt.plot(points,p,'bo')
 plt.show()
+print(x)
+
+'''
+References:
+http://blog.datumbox.com/tuning-the-learning-rate-in-gradient-descent/
+
+'''
