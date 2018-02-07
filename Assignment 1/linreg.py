@@ -56,6 +56,7 @@ alpha = 0.0001
 theta = np.ones(n)
 alpha = gradientDescent(x, p, theta, alpha, m, numIterations)
 
+
 plt.plot(points,p,'bo')
 plt.show()
 
